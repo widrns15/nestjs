@@ -31,11 +31,23 @@ describe('AppController (e2e)', () => {
       return request(app.getHttpServer()).get('/movies').expect(200).expect([]);
     });
 
-    it('POST', () => {
+    it('POST 201', () => {
       return request(app.getHttpServer())
         .post('/movies')
         .send({ title: 'Test Movie', year: 2021, genres: ['Action', 'Drama'] })
         .expect(201);
+    });
+
+    it('POST 400', () => {
+      return request(app.getHttpServer())
+        .post('/movies')
+        .send({
+          title: 'Test Movie',
+          year: 2021,
+          genres: ['Action', 'Drama'],
+          other: 'thing',
+        })
+        .expect(400);
     });
 
     it('DELETE', () => {
